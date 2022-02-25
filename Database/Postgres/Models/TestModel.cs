@@ -30,7 +30,7 @@ namespace MultipleDB.API.Database.Mongo.Models
             this.ID = ID;
         }
 
-        public void setValye(string Value)
+        public void setValue(string Value)
         {
            this.Value = Value;
         }
