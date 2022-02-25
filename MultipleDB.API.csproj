@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Business\Entities\" />
+    <Folder Include="Business\Interfaces\" />
+    <Folder Include="Business\Utility\Constants\" />
+    <Folder Include="Business\Utility\Enums\" />
+    <Folder Include="Database\Mongo\" />
+    <Folder Include="Database\Postgres\" />
+  </ItemGroup>
+
+
+</Project>
