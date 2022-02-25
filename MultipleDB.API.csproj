@@ -9,7 +9,6 @@
     <Folder Include="Business\Interfaces\" />
     <Folder Include="Business\Utility\Constants\" />
     <Folder Include="Business\Utility\Enums\" />
-    <Folder Include="Database\Mongo\Models\" />
     <Folder Include="Database\Postgres\Models\" />
   </ItemGroup>
 
