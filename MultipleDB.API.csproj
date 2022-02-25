@@ -9,8 +9,12 @@
     <Folder Include="Business\Interfaces\" />
     <Folder Include="Business\Utility\Constants\" />
     <Folder Include="Business\Utility\Enums\" />
-    <Folder Include="Database\Mongo\" />
-    <Folder Include="Database\Postgres\" />
+    <Folder Include="Database\Mongo\Models\" />
+    <Folder Include="Database\Postgres\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="6.0.3" />
   </ItemGroup>
 
 
