@@ -10,14 +10,16 @@ namespace MultipleDB.API.Database.Postgres.Models
         private int ID { get; set; }
         private string Name { get; set; }
         private DateTime CreatedDate { get; set; }
+        private string Email { get; set; }
 
         public Users(){}
 
-        public Users(int ID, string Name , DateTime CreatedDate)
+        public Users(int ID, string Name , DateTime CreatedDate, string Email)
         {
             this.ID = ID;
             this.Name = Name;
             this.CreatedDate = CreatedDate;
+            this.Email = Email;
         }
 
         public int getID()
@@ -32,6 +34,10 @@ namespace MultipleDB.API.Database.Postgres.Models
         {
             return this.CreatedDate;
         }
+        public string getEmail()
+        {
+            return this.Email;
+        }
         public void setID(int ID)
         {
             this.ID = ID;
@@ -44,7 +50,11 @@ namespace MultipleDB.API.Database.Postgres.Models
         {
             this.CreatedDate = CreatedDate;
         }
-        
+        public void setEmail(string Email)
+        {
+            this.Email = Email;
+        }
+
 
     }
 }
