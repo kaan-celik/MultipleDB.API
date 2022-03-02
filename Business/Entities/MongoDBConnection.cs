@@ -13,9 +13,29 @@ namespace MultipleDB.API.Business.Entities
 
         }
 
-        public void Connect()
+        public void Add(object data)
         {
+            throw new NotImplementedException();
+        }
 
+        public void DeleteByID(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<T> GetAll<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetSingle(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(object data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

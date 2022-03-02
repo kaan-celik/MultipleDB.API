@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MultipleDB.API.Business.Entities;
+using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Postgres;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +29,12 @@ namespace MultipleDB.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+
+            services.AddScoped<IDBContext, PostgresConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

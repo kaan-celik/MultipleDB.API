@@ -1,4 +1,5 @@
 ﻿using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Postgres;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace MultipleDB.API.Business.Entities
 {
     public class PostgresFactory : DatabaseFactory
     {
-        public override IDBContext CreateDatabase()
+        public override IDBContext CreateDatabase(Object context)
         {
-            return new PostgresConnection();
+            PostgreSqlContext _context = context as PostgreSqlContext;
+            return new PostgresConnection(_context);
         }
     }
 }

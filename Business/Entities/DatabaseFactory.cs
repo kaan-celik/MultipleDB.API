@@ -8,6 +8,6 @@ namespace MultipleDB.API.Business.Entities
 {
     public abstract class DatabaseFactory
     {
-        public abstract IDBContext CreateDatabase();
+        public abstract IDBContext CreateDatabase(Object context);
     }
 }
