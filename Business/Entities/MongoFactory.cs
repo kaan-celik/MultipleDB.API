@@ -1,4 +1,5 @@
 ﻿using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace MultipleDB.API.Business.Entities
 {
     public class MongoFactory : DatabaseFactory
     {
-        public override IDBContext CreateDatabase()
+        public override IDBContext CreateDatabase(Object context)
         {
-            return new MongoDBConnection();
+            MongoDBContext _context = context as MongoDBContext;
+            return new MongoDBConnection(_context);
         }
     }
 }

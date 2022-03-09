@@ -1,4 +1,5 @@
 ﻿using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace MultipleDB.API.Business.Entities
 {
     public class MongoDBConnection : IDBContext
     {
-        public MongoDBConnection()
+        public MongoDBConnection(MongoDBContext context)
         {
 
         }

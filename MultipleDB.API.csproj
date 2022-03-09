@@ -8,7 +8,6 @@
   <ItemGroup>
     <Folder Include="Business\Entities\Adapters\" />
     <Folder Include="Business\Utility\Constants\" />
-    <Folder Include="Database\Mongo\Models\" />
   </ItemGroup>
 
   <ItemGroup>
