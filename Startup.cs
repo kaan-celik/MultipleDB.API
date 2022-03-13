@@ -33,8 +33,7 @@ namespace MultipleDB.API
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
-
-            services.AddScoped<IDBContext, PostgresConnection>();
+            services.AddSingleton<IDBContext, PostgresConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

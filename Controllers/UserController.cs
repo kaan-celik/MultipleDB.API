@@ -15,21 +15,97 @@ namespace MultipleDB.API.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly IDBContext _dataAccessProvider;
+        private readonly IDBContext postgressAccessProvider;
 
-        public UserController(IDBContext dataAccessProvider)
+        public UserController(IDBContext _postgressAccessProvider)
         {
             DatabaseFactory databaseFactory = new PostgresFactory();
-            _dataAccessProvider = databaseFactory.CreateDatabase(dataAccessProvider);
+            postgressAccessProvider = databaseFactory.CreateDatabase(_postgressAccessProvider);
         }
 
 
-
-        [Route("api/User/GetUsers")]
-        public List<Users> GetUsers()
-        {           
-            return _dataAccessProvider.GetAll<Users>();
+        [HttpGet]
+        [Route("api/User/GetAllUsers")]
+        public List<Users> GetAllUsers()
+        {
+            try
+            {
+                return postgressAccessProvider.GetAll<Users>();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
+
+        [HttpGet]
+        [Route("api/User/GetUser")]
+        public Users GetUsers(int id)
+        {
+            try
+            {
+                return postgressAccessProvider.GetSingle(id) as Users;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+        }
+
+
+        [HttpPost]
+        [Route("api/User/AddUser")]
+        public IActionResult AddUser([FromBody] Users user)
+        {
+            try
+            {
+                postgressAccessProvider.Add(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("api/User/UpdateUser")]
+        public IActionResult UpdateUser([FromBody] Users user)
+        {
+            try
+            {
+                postgressAccessProvider.Update(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
+        }
+
+
+        [HttpDelete]
+        [Route("api/User/DeleteUser")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                postgressAccessProvider.DeleteByID(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
+        }
+
+
 
     }
 }
