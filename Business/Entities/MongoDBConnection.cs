@@ -1,5 +1,8 @@
-﻿using MultipleDB.API.Business.Interfaces;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MultipleDB.API.Business.Interfaces;
 using MultipleDB.API.Database.Mongo;
+using MultipleDB.API.Database.Mongo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +12,44 @@ namespace MultipleDB.API.Business.Entities
 {
     public class MongoDBConnection : IDBContext
     {
-        public MongoDBConnection(MongoDBContext context)
+        private MongoDBContext context;
+        public MongoDBConnection(MongoDBContext _context)
         {
-
+            context = _context;
         }
 
+
+        #region CRUD
         public void Add(object data)
         {
-            throw new NotImplementedException();
+            Teams team = data as Teams;
+            context.mongoCollection.InsertOne(team);
         }
 
-        public void DeleteByID(int ID)
+        public void DeleteByID(Object ID)
         {
-            throw new NotImplementedException();
+            string objectID = ID.ToString();
+            context.mongoCollection.DeleteOne(m => m.ID == objectID);
         }
 
-        public List<T> GetAll<T>()
+        public List<Teams> GetAll<Teams>()
         {
-            throw new NotImplementedException();
+            return context.mongoCollection.Find(new BsonDocument()).ToList() as List<Teams>;
         }
 
-        public object GetSingle(int ID)
+        public object GetSingle(Object ID)
         {
-            throw new NotImplementedException();
+            string objectID = ID.ToString();
+            return context.mongoCollection.Find<Teams>(m => m.ID == objectID).FirstOrDefault();
         }
 
         public void Update(object data)
         {
-            throw new NotImplementedException();
+            Teams team = data as Teams;
+            var filter = Builders<Teams>.Filter.Eq(g => g.ID, team.ID);
+            context.mongoCollection.ReplaceOne(filter, team);
         }
+        #endregion
+
     }
 }

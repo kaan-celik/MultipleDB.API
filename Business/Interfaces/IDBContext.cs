@@ -11,8 +11,8 @@ namespace MultipleDB.API.Business.Interfaces
     {
         void Add(Object data);
         void Update(Object data);
-        void DeleteByID(int ID);
-        Object GetSingle(int ID);
+        void DeleteByID(Object ID);
+        Object GetSingle(Object ID);
         List<T> GetAll<T>();
     }
 }

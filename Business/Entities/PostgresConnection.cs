@@ -17,6 +17,7 @@ namespace MultipleDB.API.Business.Entities
             _context = context;
         }
 
+        #region CRUD
         public void Add(object data)
         {
             Users user = data as Users;
@@ -24,9 +25,10 @@ namespace MultipleDB.API.Business.Entities
             _context.SaveChanges();
         }
 
-        public void DeleteByID(int ID)
+        public void DeleteByID(Object ID)
         {
-            var selectedUser = _context.User.FirstOrDefault(t => t.GetID() == ID);
+            int UserID = Convert.ToInt32(ID);
+            var selectedUser = _context.User.FirstOrDefault(t => t.ID == UserID);
             _context.User.Remove(selectedUser);
             _context.SaveChanges();
         }
@@ -34,12 +36,13 @@ namespace MultipleDB.API.Business.Entities
 
         public List<Users> GetAll<Users>()
         {
-            return _context.User as List<Users>;             
+            return _context.User as List<Users>;
         }
 
-        public object GetSingle(int ID)
-        {            
-            return _context.User.FirstOrDefault(t => t.GetID() == ID);
+        public object GetSingle(Object ID)
+        {
+            int UserID = Convert.ToInt32(ID);
+            return _context.User.FirstOrDefault(t => t.ID == UserID);
         }
 
         public void Update(object data)
@@ -49,4 +52,6 @@ namespace MultipleDB.API.Business.Entities
             _context.SaveChanges();
         }
     }
+    #endregion
+
 }
