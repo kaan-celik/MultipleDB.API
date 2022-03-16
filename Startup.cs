@@ -6,9 +6,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MultipleDB.API.Business.Entities;
 using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Mongo;
 using MultipleDB.API.Database.Postgres;
+using MultipleDB.API.Middleware;
+using MultipleDB.API.Settings;
+using MultipleDB.API.Settings.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +35,12 @@ namespace MultipleDB.API
         {
             services.AddControllers();
 
+            services.AddLogging();
+
             var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+
+            services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
+            services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
 
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
             services.AddSingleton<IDBContext, PostgresConnection>();
@@ -45,6 +55,9 @@ namespace MultipleDB.API
             }
 
             app.UseRouting();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<RequestResponseMiddeware>();
 
             app.UseAuthorization();
 
