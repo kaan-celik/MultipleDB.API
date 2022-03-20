@@ -40,13 +40,13 @@ namespace MultipleDB.API
             services.AddHealthChecks();
             
             services.AddLogging();
-
-            var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+            
 
             services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
-            services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
+            services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);            
 
-            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(Configuration.GetConnectionString(nameof(PostgresSettings))));
             services.AddSingleton<IDBContext, PostgresConnection>();
         }
 

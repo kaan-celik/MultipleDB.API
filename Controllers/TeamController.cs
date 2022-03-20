@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MultipleDB.API.Business.Entities;
 using MultipleDB.API.Business.Interfaces;
+using MultipleDB.API.Database.Mongo;
 using MultipleDB.API.Database.Mongo.Models;
+using MultipleDB.API.Settings.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,10 @@ namespace MultipleDB.API.Controllers
     {
         private readonly IDBContext mongoAccessProvider;
 
-        public TeamController(IDBContext _mongoAccessProvider)
-        {
+        public TeamController(IDBSettings settings)
+        {           
             DatabaseFactory databaseFactory = new PostgresFactory();
-            mongoAccessProvider = databaseFactory.CreateDatabase(_mongoAccessProvider);
+            mongoAccessProvider = databaseFactory.CreateDatabase(new MongoDBContext(settings));
         }
 
 
