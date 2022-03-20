@@ -41,13 +41,13 @@ namespace MultipleDB.API
             
             services.AddLogging();
 
-            //var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+            var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
-            //services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
-            //services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
+            services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
+            services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
 
-            //services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
-            //services.AddSingleton<IDBContext, PostgresConnection>();
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+            services.AddSingleton<IDBContext, PostgresConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
