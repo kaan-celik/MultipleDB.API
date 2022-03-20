@@ -21,7 +21,7 @@ There are 2 DB context which implemented by an interface. And there are 2 factor
 
 ## Injections:
 
-The one is MongoDB settings. It inserted to servers side as singleton injection. The other one is PostgresContext added as singleton injection. Their settings are gathered from config file of api.
+The one is MongoDB settings. It has inserted to servers side as singleton injection. The other one is PostgresContext added as singleton injection. Their settings are gathered from config file of api.
 And using in constructor of the determined controllers.
 
 
