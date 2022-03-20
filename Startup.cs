@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using MultipleDB.API.Business.Entities;
 using MultipleDB.API.Business.Interfaces;
 using MultipleDB.API.Database.Mongo;
 using MultipleDB.API.Database.Postgres;
+using MultipleDB.API.Extensions;
 using MultipleDB.API.Middleware;
 using MultipleDB.API.Settings;
 using MultipleDB.API.Settings.Interfaces;
@@ -35,15 +37,17 @@ namespace MultipleDB.API
         {
             services.AddControllers();
 
+            services.AddHealthChecks();
+            
             services.AddLogging();
 
-            var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
+            //var sqlConnectionString = Configuration["PostgreSqlConnectionString"];
 
-            services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
-            services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
+            //services.Configure<MongoSettings>(Configuration.GetSection(nameof(MongoSettings)));
+            //services.AddSingleton<IDBSettings>(t => t.GetRequiredService<IOptions<MongoSettings>>().Value);
 
-            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
-            services.AddSingleton<IDBContext, PostgresConnection>();
+            //services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+            //services.AddSingleton<IDBContext, PostgresConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +62,8 @@ namespace MultipleDB.API
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<RequestResponseMiddeware>();
+            app.UseCustomHealthCheck();
+            
 
             app.UseAuthorization();
 
